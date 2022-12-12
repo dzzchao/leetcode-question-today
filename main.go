@@ -39,12 +39,14 @@ import (
 var (
 	slack string // slack 通知链接
 	wecom string // wecom 通知链接
+	lark  string // 飞书
 	help  bool   // 帮助
 )
 
 func init() {
 	flag.StringVar(&slack, "slack", "", "slack webhook url")
 	flag.StringVar(&wecom, "wecom", "", "wecom webhook token")
+	flag.StringVar(&wecom, "lark", "", "lark webhook url")
 	flag.BoolVar(&help, "h", false, "帮助")
 	flag.Usage = usage
 }
@@ -106,6 +108,11 @@ LinkCN: %s`
 
 	if wecom != "" {
 		w := msgpush.NewWeCom(wecom)
+		_ = w.SendText(content)
+	}
+
+	if lark != "" {
+		w := msgpush.NewFeiShu(lark)
 		_ = w.SendText(content)
 	}
 
