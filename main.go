@@ -46,7 +46,7 @@ var (
 func init() {
 	flag.StringVar(&slack, "slack", "", "slack webhook url")
 	flag.StringVar(&wecom, "wecom", "", "wecom webhook token")
-	flag.StringVar(&wecom, "lark", "", "lark webhook url")
+	flag.StringVar(&lark, "lark", "", "lark webhook url")
 	flag.BoolVar(&help, "h", false, "帮助")
 	flag.Usage = usage
 }
@@ -113,7 +113,8 @@ LinkCN: %s`
 
 	if lark != "" {
 		w := msgpush.NewFeiShu(lark)
-		_ = w.SendText(content)
+		err = w.SendText(content)
+		fmt.Printf("err==%s\n", err)
 	}
 
 	return
